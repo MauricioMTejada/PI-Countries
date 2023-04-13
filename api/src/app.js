@@ -10,12 +10,11 @@ const server = express();
 
 server.name = 'API';
 
+// midlewere de prueba
 server.use((req, res, next) => {
-  console.log("todos los peces");
+  console.log("Pasa por el 1º midlewere");
   next();
 })
-
-
 
 server.use(bodyParser.urlencoded({ extended: true, limit: '50mb' })); 
 /* El primer middleware, bodyParser.urlencoded(), se utiliza para analizar 
@@ -36,8 +35,7 @@ server.use(morgan('dev'));
 solicitud HTTP en la consola del servidor para fines de depuración. En este caso, 
 se utiliza la opción 'dev' para registrar los detalles en un formato legible. */
 server.use((req, res, next) => {
-  console.log("por aqui");
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // update to match the domain you will make the request from
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // update to match the domain you will make the request from
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
@@ -56,6 +54,11 @@ pasar la solicitud al siguiente middleware en la cadena de middleware. */
 
 
 server.use('/', routes);
+
+/*server.use('/', (req, res) => {
+  console.log("Respueta de prueba a solicitud GET, debe tener mensaje de respuesta la página también");
+  res.send('Respueta de prueba a solicitud GET, debe tener mensaje de respuesta la consola también');
+});*/
 
 
 // Error catching endware.
