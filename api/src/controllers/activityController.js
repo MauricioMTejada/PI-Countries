@@ -1,7 +1,11 @@
-const {Activity} = require("../db");
+const { Activity } = require("../db");
 
-const createActivityDB = async (nombre, dificultad, duracion, temporada) => {
-    return await Activity.create({nombre, dificultad, duracion, temporada});
+const createActivity = async (nombre, dificultad, duracion, temporada) => {
+  return await Activity.create({ nombre, dificultad, duracion, temporada });
 };
 
-module.exports = {createActivityDB};
+const getAllActivities = async () => {
+  return await Activity.findAll();
+};
+
+module.exports = { createActivity, getAllActivities };
