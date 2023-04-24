@@ -1,6 +1,6 @@
-import { GET_PAISES } from "./actions";
+import { GET_PAISES, GET_BY_NAME } from "./actions";
 
-const initialState = {
+/* const initialState = {
   paises: [
     {
       id: "ITA",
@@ -63,15 +63,24 @@ const initialState = {
       poblacion: 226915,
     },
   ],
-};
+}; */
+
+const initialState = { paises: []}
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_PAISES:
       return {...state, paises: action.payload}; 
 
+    case GET_BY_NAME:
+      //console.log("llega al reducer");
+      //console.log(`action.payload: ${action.payload}`);
+      //console.log(action.payload);
+      //console.log(state.paises);
+      return {...state, paises: action.payload};
+
     default:
-      return { ...state };
+      return {...state};
   }
 };
 

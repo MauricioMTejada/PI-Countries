@@ -1,18 +1,17 @@
-import style from "./Card.module.css"
+import style from "./Card.module.css";
+import { Link } from "react-router-dom";
 
 const Card = (props) => {
   return (
     <div className={style.card}>
-      <p>Id: {props.id}</p>
+      <Link to={`home/${props.id}`}>
+        <img src={props.bandera} alt="Bandera" style={{ maxWidth: "250px" }} />
+      </Link>
+
       <p>Nombre: {props.nombre}</p>
-      <p>Bandera: {props.bandera}</p>
       <p>Continente: {props.continente}</p>
-      <p>Capital: {props.capital}</p>
-      <p>Subregion: {props.subregion}</p>
-      <p>Area: {props.area}</p>
-      <p>Población: {props.poblacion}</p>
     </div>
   );
-}; 
+};
 
 export default Card;
