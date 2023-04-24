@@ -6,12 +6,15 @@ const {
 
 const getCountriesHandler = async (req, res) => {
   const { nombre } = req.query;
+  console.log(`LLego a getCountries Handler. nombre = ${nombre}`);
 
   try {
     if (nombre) {
+      console.log("- - Pasa a solicitar un pais - -");
       const coutryByName = await getCoutryByName(nombre);
       res.status(200).json(coutryByName);
     } else {
+      console.log("- - Pasa a solicitar a todos los países - -");
       const response = await getAllCountries();
       res.status(200).json(response);
     }

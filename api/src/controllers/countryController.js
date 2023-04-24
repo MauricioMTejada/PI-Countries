@@ -5,6 +5,7 @@ const getAllCountries = async () => {
 };
 
 const getCoutryByName = async (name) => {
+  //console.log(`estoy en el controler, name= ${name}`);
   return await Country.findOne({ where: { nombre: name } });
 };
 
