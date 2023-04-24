@@ -22,7 +22,7 @@ const createActivityHandler = async (req, res) => {
       duracion,
       temporada
     );
-    res.status(200).json(response);
+    res.status(200).json("Actividad Creada!");
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

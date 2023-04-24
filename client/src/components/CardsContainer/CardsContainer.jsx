@@ -12,7 +12,7 @@ const CardsContainer = () => {
           <Card
             id={pais.id}
             nombre={pais.nombre}
-            bandera={pais.bandera}
+            /* bandera={pais.bandera} */
             continente={pais.continente}
             capital={pais.capital}
             subregion={pais.subregion}
