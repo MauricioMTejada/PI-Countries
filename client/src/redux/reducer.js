@@ -1,4 +1,10 @@
-import { GET_PAISES, GET_BY_NAME, FILTER_BY_CONTINENT } from "./actions";
+import {
+  GET_PAISES,
+  GET_BY_NAME,
+  FILTER_BY_CONTINENT,
+  ORDER_BY_NAME,
+  GET_DETAILS,
+} from "./actions";
 
 /* const initialState = {
   paises: [
@@ -65,7 +71,7 @@ import { GET_PAISES, GET_BY_NAME, FILTER_BY_CONTINENT } from "./actions";
   ],
 }; */
 
-const initialState = { paises: [], copiaPaises: [] };
+const initialState = { paises: [], copiaPaises: [], detail: [] };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -90,6 +96,51 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         paises: statusFiltered,
       };
+
+    case ORDER_BY_NAME:
+      //console.log(action.payload);
+      //console.log(state.paises);
+      
+      if (action.payload === "asc") {
+        state.paises.sort(function (a, b) {
+          if (a.nombre > b.nombre) {
+            return 1;
+          }
+          if (a.nombre < b.nombre) {
+            return -1;
+          }
+          return 0;
+        });
+      }
+
+      if (action.payload === "desc") {
+        state.paises.sort(function (a, b) {
+          if (a.nombre < b.nombre) {
+            return 1;
+          }
+          if (a.nombre > b.nombre) {
+            return -1;
+          }
+          return 0;
+        });
+      }
+
+      if (action.payload === "sinOrden") {
+        state.paises = state.copiaPaises
+      }
+      //console.log(state.paises);
+
+      //console.log(sortedArr);
+      return {
+        ...state,
+        paises: state.paises,
+      };
+
+      case GET_DETAILS:
+        return {
+          ...state, detail: action.payload
+
+        }
 
     default:
       return { ...state };

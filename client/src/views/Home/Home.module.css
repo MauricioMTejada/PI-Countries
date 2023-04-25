@@ -1,9 +1,17 @@
 .selectores {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
-  }
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
 
-  .espacioSelectores{
-    margin-right: 20px;
-  }
+.espacioSelectores {
+  margin-right: 20px;
+}
+
+.imagenFondo {
+  background-image: url("./planisferio3.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: 100vh; /* para ocupar toda la altura de la ventana */
+}

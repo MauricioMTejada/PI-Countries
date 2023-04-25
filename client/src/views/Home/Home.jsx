@@ -2,14 +2,21 @@ import CardsContainer from "../../components/CardsContainer/CardsContainer";
 import NavBar from "../../components/NavBar/NavBar";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getByName, getPaises, filterContinent } from "../../redux/actions";
+import {
+  getByName,
+  getPaises,
+  filterContinent,
+  orderByName,
+} from "../../redux/actions";
 import Paginado from "../../components/Paginado/Paginado";
-import style from "./Home.module.css"
+import style from "./Home.module.css";
 
 const Home = () => {
   const dispatch = useDispatch();
   const paises = useSelector((state) => state.paises);
   //console.log(paises);
+  // Estado auxiliar para refrescar la página
+  //const [auxiliar,setAuxiliar] = useState(0)
 
   //↓↓↓↓↓ Paginado ↓↓↓↓↓
   const [searchString, setSearchString] = useState("");
@@ -38,14 +45,24 @@ const Home = () => {
     dispatch(getPaises());
   }, [dispatch]);
 
-function handleFilterContient(event) {
-  //console.log(event.target.value);
-  dispatch(filterContinent(event.target.value))
-}
+  const [orden, setOrden] = useState("");
+  function handleSort(element) {
+    //console.log(element.target.value);
+    element.preventDefault();
+    dispatch(orderByName(element.target.value));
+    setCurrentPage(1);
+    setOrden(`${element.target.value}`);
+    console.log(`Se realizó un orden: ${orden}`);
+  }
 
+  function handleFilterContient(event) {
+    //console.log(event.target.value);
+    dispatch(filterContinent(event.target.value));
+    setCurrentPage(1);
+  }
 
   return (
-    <div>
+    <div className={style.imagenFondo}>
       <h1>Esta es la vista de Home</h1>
       <NavBar
         handleChange={handleChange}
@@ -53,15 +70,18 @@ function handleFilterContient(event) {
         paginado={paginado}
       />
       <div className={style.selectores}>
-        <select name="" id="">
-          <option value="asac">Ascendente</option>
+        {/* //↓↓↓↓↓ Selector Orden ↓↓↓↓↓ */}
+        <select onChange={(element) => handleSort(element)}>
+          <option value="sinOrden">Sin Alterar</option>
+          <option value="asc">Ascendente</option>
           <option value="desc">Descendente</option>
         </select>
+        {/* //↑↑↑↑↑ Selector Orden ↑↑↑↑↑ */}
 
         <div className={style.espacioSelectores}></div>
 
-        {/* <select onChange={e=>handleFilterStatus(e)}> */}
-        <select onChange={event=>handleFilterContient(event)}>
+        {/* //↓↓↓↓↓ Selector Continente ↓↓↓↓↓ */}
+        <select onChange={(event) => handleFilterContient(event)}>
           <option value="All">Todos los Países</option>
           <option value="Africa">África</option>
           <option value="Europe">Europa</option>
@@ -71,6 +91,7 @@ function handleFilterContient(event) {
           <option value="South America">América del Sur</option>
           <option value="Antarctica">Antártica</option>
         </select>
+        {/* //↑↑↑↑↑ Selector Continente ↑↑↑↑↑ */}
       </div>
       <Paginado
         presentarPaises={presentarPaises}
