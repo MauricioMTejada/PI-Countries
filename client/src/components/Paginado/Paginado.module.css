@@ -1,0 +1,15 @@
+.mainContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: darkgrey;
+    border-radius: 15px;
+    border: 1px solid black;
+}
+
+.aStyle {
+    text-decoration: none;
+    color: blue;
+    cursor: pointer;
+    padding: 0 7px;
+  }

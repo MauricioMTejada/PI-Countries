@@ -2,6 +2,8 @@ import axios from "axios";
 
 export const GET_PAISES = "GET_PAISES";
 export const GET_BY_NAME = "GET_BY_NAME";
+export const FILTER_BY_CONTINENT = "FILTER_BY_CONTINENT";
+export const ORDER_BY_NAME = "ORDER_BY_NAME"
 
 export const getPaises = () => {
   return async function (dispatch) {
@@ -24,6 +26,18 @@ export const getByName = (name) => {
     dispatch({ type: GET_BY_NAME, payload: paisByName });
   };
 };
+
+export function filterContinent(payload) {
+  //console.log(payload);
+  return { type: FILTER_BY_CONTINENT, payload: payload };
+}
+
+/* export function orderByName(payload) {
+  return {
+    type: ORDER_BY_NAME,
+    payload
+  }
+} */
 
 /* export const getPais = (id) => {
   return async function (dispatch) {

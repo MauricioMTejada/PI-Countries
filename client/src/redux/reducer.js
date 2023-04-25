@@ -1,4 +1,4 @@
-import { GET_PAISES, GET_BY_NAME } from "./actions";
+import { GET_PAISES, GET_BY_NAME, FILTER_BY_CONTINENT } from "./actions";
 
 /* const initialState = {
   paises: [
@@ -65,22 +65,34 @@ import { GET_PAISES, GET_BY_NAME } from "./actions";
   ],
 }; */
 
-const initialState = { paises: []}
+const initialState = { paises: [], copiaPaises: [] };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_PAISES:
-      return {...state, paises: action.payload}; 
+      return { ...state, paises: action.payload, copiaPaises: action.payload };
 
     case GET_BY_NAME:
       //console.log("llega al reducer");
       //console.log(`action.payload: ${action.payload}`);
       //console.log(action.payload);
       //console.log(state.paises);
-      return {...state, paises: action.payload};
+      return { ...state, paises: action.payload };
+
+    case FILTER_BY_CONTINENT:
+      //console.log(action.payload);
+      const paises = state.copiaPaises;
+      const statusFiltered =
+        action.payload === "All"
+          ? paises
+          : paises.filter((element) => element.continente === action.payload);
+      return {
+        ...state,
+        paises: statusFiltered,
+      };
 
     default:
-      return {...state};
+      return { ...state };
   }
 };
 
