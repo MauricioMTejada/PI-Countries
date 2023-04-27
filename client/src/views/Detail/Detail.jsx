@@ -49,7 +49,7 @@ export default function Detail(props) {
           <span>{myCountry.actividades}</span>
         </div>
       </div>
-
+<br />
       <Link to= "/home"> <button>Volver</button> </Link>
     </div>
   );

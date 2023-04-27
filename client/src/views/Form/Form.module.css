@@ -1,9 +1,5 @@
 .imagenFondo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-    background-image: url("./planisferio4.jpg");
+    background-image: url("./planisferio4.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;

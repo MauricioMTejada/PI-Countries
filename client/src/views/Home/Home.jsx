@@ -7,6 +7,7 @@ import {
   getPaises,
   filterContinent,
   orderByName,
+  orderByPopulation,
 } from "../../redux/actions";
 import Paginado from "../../components/Paginado/Paginado";
 import style from "./Home.module.css";
@@ -39,6 +40,8 @@ const Home = () => {
   function handleSubmit(event) {
     event.preventDefault();
     dispatch(getByName(searchString));
+    //Para buscar y que no me deje en una página en blanco:
+    setCurrentPage(1);
   }
 
   useEffect(() => {
@@ -55,6 +58,15 @@ const Home = () => {
     console.log(`Se realizó un orden: ${orden}`);
   }
 
+  function handleSortPoblación(element) {
+    //console.log(element.target.value);
+    element.preventDefault();
+    dispatch(orderByPopulation(element.target.value));
+    setCurrentPage(1);
+    setOrden(`${element.target.value}`);
+    console.log(`Se realizó un orden: ${orden}`);
+  }
+
   function handleFilterContient(event) {
     //console.log(event.target.value);
     dispatch(filterContinent(event.target.value));
@@ -63,20 +75,36 @@ const Home = () => {
 
   return (
     <div className={style.imagenFondo}>
-      <h1>Esta es la vista de Home</h1>
+      
       <NavBar
         handleChange={handleChange}
         handleSubmit={handleSubmit}
         paginado={paginado}
       />
       <div className={style.selectores}>
-        {/* //↓↓↓↓↓ Selector Orden ↓↓↓↓↓ */}
+        {/* //↓↓↓↓↓ Selector Orden Alfabético ↓↓↓↓↓ */}
+        <span>
+          <strong>Orden Alfabético:_</strong>
+        </span>
         <select onChange={(element) => handleSort(element)}>
           <option value="sinOrden">Sin Alterar</option>
           <option value="asc">Ascendente</option>
           <option value="desc">Descendente</option>
         </select>
-        {/* //↑↑↑↑↑ Selector Orden ↑↑↑↑↑ */}
+        {/* //↑↑↑↑↑ Selector Orden Alfabético ↑↑↑↑↑ */}
+
+        <div className={style.espacioSelectores}></div>
+
+        {/* //↓↓↓↓↓ Selector Orden Población ↓↓↓↓↓ */}
+        <span>
+          <strong>Orden por Población:_</strong>
+        </span>
+        <select onChange={(element) => handleSortPoblación(element)}>
+          <option value="sinOrden">Sin Alterar</option>
+          <option value="asc">Ascendente</option>
+          <option value="desc">Descendente</option>
+        </select>
+        {/* //↑↑↑↑↑ Selector Orden Población ↑↑↑↑↑ */}
 
         <div className={style.espacioSelectores}></div>
 

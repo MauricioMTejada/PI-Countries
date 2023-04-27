@@ -1,8 +1,13 @@
 .mainContainer{
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-evenly;
     background-color: darkgrey;
     border-radius: 15px;
     border: 1px solid black;
+    
+}
+
+.replaceSearch{
+    width: 235px;
 }

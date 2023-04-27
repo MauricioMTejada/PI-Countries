@@ -10,6 +10,7 @@ const Card = (props) => {
 
       <p>Nombre: {props.nombre}</p>
       <p>Continente: {props.continente}</p>
+      <p>Población: {props.poblacion}</p>
     </div>
   );
 };

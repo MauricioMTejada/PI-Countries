@@ -7,9 +7,12 @@
     border: 1px solid black;
 }
 
-.aStyle {
+.numeroStyle {
     text-decoration: none;
-    color: blue;
+    color: #040404; /* fucsia */
     cursor: pointer;
     padding: 0 7px;
+    text-shadow: 0 0 3px rgb(253, 253, 255); /* borde azul */
+    font-weight: bold;
   }
+  
