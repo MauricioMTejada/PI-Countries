@@ -30,7 +30,10 @@ const createActivity = async (
 };
 
 const getAllActivities = async () => {
-  return await Activity.findAll();
+  const activityAndRelations = { actividades: [], relaciones: []}
+  activityAndRelations.actividades = await Activity.findAll();
+  activityAndRelations.relaciones = await ActivityCountry.findAll();
+  return activityAndRelations;
 };
 
 module.exports = { createActivity, getAllActivities };

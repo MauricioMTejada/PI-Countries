@@ -13,13 +13,15 @@ export default function Paginado({ presentarPaises, paises, paginado }) {
       <ul>
         {pageNumbers &&
           pageNumbers.map((number) => (
-            <a
-              href={`#${number}`}
-              key={number}
-              className={style.numeroStyle}
-              onClick={() => paginado(number)}
-            >
-              {number}
+            <a className={style.numeroContainer} key={"a"+number} href={`#${number}a`}>
+              <span
+                href={`#${number}`}
+                key={number}
+                className={style.numeroStyle}
+                onClick={() => paginado(number)}
+              >
+                {number}
+              </span>
             </a>
           ))}
       </ul>

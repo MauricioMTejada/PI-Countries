@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
 import NavBar from "../../components/NavBar/NavBar";
-import style from "./Form.module.css"
+import style from "./Form.module.css";
 
 const Form = () => {
   const [form, setForm] = useState({
@@ -108,92 +108,97 @@ const Form = () => {
   return (
     <div className={style.imagenFondo}>
       <NavBar />
-      <form onSubmit={submitHandler}>
+      <div className={style.formulario}>
+        <div></div>
         <div>
-          <label>Nombre: </label>
-          <input
-            type="text"
-            value={form.nombre}
-            onChange={changeHandler}
-            name="nombre"
-          />
-        </div>
-        {errors.nombre && <span>{errors.nombre}</span>}
-        <div>
-          <span>Dificultad: </span>
-          <select
-            onChange={changeHandler}
-            value={form.dificultad}
-            name="dificultad"
-          >
-            <option value={1}>- 1 -</option>
-            <option value={2}>- 2 -</option>
-            <option value={3}>- 3 -</option>
-            <option value={4}>- 4 -</option>
-            <option value={5}>- 5 -</option>
-          </select>
-          <label>Dificultad: </label>
-        </div>
-        <div>
-          <span>Duración: </span>
-          <select
-            onChange={changeHandler}
-            value={form.duracion}
-            name="duración"
-          >
-            <option value={1}>- 1 -</option>
-            <option value={2}>- 2 -</option>
-            <option value={3}>- 3 -</option>
-            <option value={4}>- 4 -</option>
-            <option value={5}>- 5 -</option>
-            <option value={6}>- 6 -</option>
-            <option value={7}>- 7 -</option>
-            <option value={8}>- 8 -</option>
-            <option value={9}>- 9 -</option>
-            <option value={10}>- 10 -</option>
-            <option value={11}>- 11 -</option>
-            <option value={12}>- 12 -</option>
-          </select>
-        </div>
-        <div>
-          <span>Temporada: </span>
-          <select
-            onChange={changeHandler}
-            value={form.temporada}
-            name="temporada"
-          >
-            <option value="Verano">Verano</option>
-            <option value="Otoño">Otoño</option>
-            <option value="Inverno">Inverno</option>
-            <option value="Primavera">Primavera</option>
-          </select>
-        </div>
-        <div>
-          {/* //↓↓↓↓↓ Selector de Pais ↓↓↓↓↓ */}
-          <span>Pais 1: </span>
-          <select onChange={changeHandlerPais} name="pais1">
-            <option value="">- Seleccione un País -</option>
-            {renderPaises()}
-          </select>{" "}
-          <br />
-          <span>Pais 2:_</span>
-          <select onChange={changeHandlerPais} name="pais2">
-            <option value="">- Seleccione un País -</option>
-            {renderPaises()}
-          </select>{" "}
-          <br />
-          <span>Pais 3:_</span>
-          <select onChange={changeHandlerPais} name="pais3">
-            <option value="">- Seleccione un País -</option>
-            {renderPaises()}
-          </select>
-          {/* //↑↑↑↑↑ Selector de Pais ↑↑↑↑↑ */}
-        </div>
-        <br />
-        {errors.pais && <span>{errors.pais}</span>}
+          <form onSubmit={submitHandler}>
+            <div>
+              <label>Nombre: </label>
+              <input
+                type="text"
+                value={form.nombre}
+                onChange={changeHandler}
+                name="nombre"
+              />
+            </div>
+            {errors.nombre && <span>{errors.nombre}</span>}
+            <div>
+              <span>Dificultad: </span>
+              <select
+                onChange={changeHandler}
+                value={form.dificultad}
+                name="dificultad"
+              >
+                <option value={1}>- 1 -</option>
+                <option value={2}>- 2 -</option>
+                <option value={3}>- 3 -</option>
+                <option value={4}>- 4 -</option>
+                <option value={5}>- 5 -</option>
+              </select>
+            </div>
+            <div>
+              <span>Duración: </span>
+              <select
+                onChange={changeHandler}
+                value={form.duracion}
+                name="duración"
+              >
+                <option value={1}>- 1 -</option>
+                <option value={2}>- 2 -</option>
+                <option value={3}>- 3 -</option>
+                <option value={4}>- 4 -</option>
+                <option value={5}>- 5 -</option>
+                <option value={6}>- 6 -</option>
+                <option value={7}>- 7 -</option>
+                <option value={8}>- 8 -</option>
+                <option value={9}>- 9 -</option>
+                <option value={10}>- 10 -</option>
+                <option value={11}>- 11 -</option>
+                <option value={12}>- 12 -</option>
+              </select>
+            </div>
+            <div>
+              <span>Temporada: </span>
+              <select
+                onChange={changeHandler}
+                value={form.temporada}
+                name="temporada"
+              >
+                <option value="Verano">Verano</option>
+                <option value="Otoño">Otoño</option>
+                <option value="Inverno">Inverno</option>
+                <option value="Primavera">Primavera</option>
+              </select>
+            </div>
+            <div>
+              {/* //↓↓↓↓↓ Selector de Pais ↓↓↓↓↓ */}
+              <span>Pais 1: </span>
+              <select onChange={changeHandlerPais} name="pais1">
+                <option value="">- Seleccione un País -</option>
+                {renderPaises()}
+              </select>{" "}
+              <br />
+              <span>Pais 2:_</span>
+              <select onChange={changeHandlerPais} name="pais2">
+                <option value="">- Seleccione un País -</option>
+                {renderPaises()}
+              </select>{" "}
+              <br />
+              <span>Pais 3:_</span>
+              <select onChange={changeHandlerPais} name="pais3">
+                <option value="">- Seleccione un País -</option>
+                {renderPaises()}
+              </select>
+              {/* //↑↑↑↑↑ Selector de Pais ↑↑↑↑↑ */}
+            </div>
+            <br />
+            {errors.pais && <span>{errors.pais}</span>}
 
-        <button type="submit">Enviar</button>
-      </form>
+            <button type="submit">Enviar</button>
+          </form>
+        </div>
+        <div></div>
+      </div>
     </div>
   );
 };

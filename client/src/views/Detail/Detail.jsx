@@ -14,7 +14,6 @@ export default function Detail(props) {
   }, [dispatch, props.match.params.id]);
 
   const myCountry = useSelector((state) => state.detail);
-  //console.log(myCountry);
 
   return (
     <div className={style.imagenFondo}>
@@ -49,8 +48,11 @@ export default function Detail(props) {
           <span>{myCountry.actividades}</span>
         </div>
       </div>
-<br />
-      <Link to= "/home"> <button>Volver</button> </Link>
+      <br />
+      <Link to="/home">
+        {" "}
+        <button>Volver</button>{" "}
+      </Link>
     </div>
   );
 }

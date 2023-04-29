@@ -5,3 +5,12 @@
     background-position: center center;
     height: 100vh; /* para ocupar toda la altura de la ventana */
   }
+
+  .formulario{
+    display: flex;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+  }

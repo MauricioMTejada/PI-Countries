@@ -8,21 +8,22 @@ import {
   filterContinent,
   orderByName,
   orderByPopulation,
+  filterActivades,
 } from "../../redux/actions";
 import Paginado from "../../components/Paginado/Paginado";
 import style from "./Home.module.css";
 
 const Home = () => {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getPaises());
+  }, [dispatch]);
+
   const paises = useSelector((state) => state.paises);
-  //console.log(paises);
-  // Estado auxiliar para refrescar la página
-  //const [auxiliar,setAuxiliar] = useState(0)
 
   //↓↓↓↓↓ Paginado ↓↓↓↓↓
-  const [searchString, setSearchString] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  ////const [presentarPaises, setPresentarPaises] = useState(10);
   const presentarPaises = 10;
   const indexOfLastCountry = currentPage * presentarPaises;
   const indexOfFirstCounty = indexOfLastCountry - presentarPaises;
@@ -31,6 +32,9 @@ const Home = () => {
     setCurrentPage(pageNumber);
   };
   //↑↑↑↑↑ Paginado ↑↑↑↑↑
+
+  //↓↓↓↓↓ NavBar ↓↓↓↓↓
+  const [searchString, setSearchString] = useState("");
 
   function handleChange(event) {
     event.preventDefault();
@@ -43,11 +47,9 @@ const Home = () => {
     //Para buscar y que no me deje en una página en blanco:
     setCurrentPage(1);
   }
+  //↑↑↑↑↑ NavBar ↑↑↑↑↑
 
-  useEffect(() => {
-    dispatch(getPaises());
-  }, [dispatch]);
-
+  //↓↓↓↓↓ Orden por Nombre ↓↓↓↓↓
   const [orden, setOrden] = useState("");
   function handleSort(element) {
     //console.log(element.target.value);
@@ -57,7 +59,9 @@ const Home = () => {
     setOrden(`${element.target.value}`);
     console.log(`Se realizó un orden: ${orden}`);
   }
+  //↑↑↑↑↑ Orden por Nombre ↑↑↑↑↑
 
+  //↓↓↓↓↓ Orden por Población ↓↓↓↓↓
   function handleSortPoblación(element) {
     //console.log(element.target.value);
     element.preventDefault();
@@ -66,16 +70,25 @@ const Home = () => {
     setOrden(`${element.target.value}`);
     console.log(`Se realizó un orden: ${orden}`);
   }
+  //↑↑↑↑↑ Orden por Población ↑↑↑↑↑
 
+  //↓↓↓↓↓ Orden por Continente ↓↓↓↓↓
   function handleFilterContient(event) {
     //console.log(event.target.value);
     dispatch(filterContinent(event.target.value));
     setCurrentPage(1);
   }
+  //↑↑↑↑↑ Orden por Continente ↑↑↑↑↑
+
+  //↓↓↓↓↓ Orden por Actividades ↓↓↓↓↓
+  function handleFilterActividades(event) {
+    dispatch(filterActivades(event.target.value));
+    setCurrentPage(1);
+  }
+  //↑↑↑↑↑ Orden por Actividades ↑↑↑↑↑
 
   return (
     <div className={style.imagenFondo}>
-      
       <NavBar
         handleChange={handleChange}
         handleSubmit={handleSubmit}
@@ -109,6 +122,9 @@ const Home = () => {
         <div className={style.espacioSelectores}></div>
 
         {/* //↓↓↓↓↓ Selector Continente ↓↓↓↓↓ */}
+        <span>
+          <strong>Orden por Continente:_</strong>
+        </span>
         <select onChange={(event) => handleFilterContient(event)}>
           <option value="All">Todos los Países</option>
           <option value="Africa">África</option>
@@ -120,6 +136,17 @@ const Home = () => {
           <option value="Antarctica">Antártica</option>
         </select>
         {/* //↑↑↑↑↑ Selector Continente ↑↑↑↑↑ */}
+        <div className={style.espacioSelectores}></div>
+
+        {/* //↓↓↓↓↓ Selector Actividad ↓↓↓↓↓ */}
+        <span>
+          <strong>Orden por Actividad:_</strong>
+        </span>
+        <select onChange={(event) => handleFilterActividades(event)}>
+          <option value="All">Todos las Actividades</option>
+          <option value=""></option>
+        </select>
+        {/* //↑↑↑↑↑ Selector Actividad ↑↑↑↑↑ */}
       </div>
       <Paginado
         presentarPaises={presentarPaises}

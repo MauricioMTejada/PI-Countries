@@ -5,7 +5,11 @@ const Card = (props) => {
   return (
     <div className={style.card}>
       <Link to={`home/${props.id}`}>
-        <img src={props.bandera} alt="Bandera" style={{ maxWidth: "250px", maxHeight: "170px" }} />
+        <img
+          src={props.bandera}
+          alt="Bandera"
+          style={{ maxWidth: "250px", maxHeight: "170px" }}
+        />
       </Link>
 
       <p>Nombre: {props.nombre}</p>

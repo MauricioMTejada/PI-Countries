@@ -19,25 +19,29 @@ export const getPaises = () => {
 
 export const getByName = (nombre) => {
   //console.log(`(1)recibo el nombre que escribi en NavBar: ${nombre}`);
-  const name = nombre
-    .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join(" ");
+  if (nombre === null) {
+    alert("Coloque el nombre de un país.");
+    return;
+  } else {
+    const name = nombre
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
 
-  return async function (dispatch) {
-    //console.log(`(2)recibo el nombre que escribi en NavBar: ${name}`);
-    const apiData = await axios.get(`${URLBASE}countries/?nombre=${name}`);
-    const paisByName = [apiData.data];
-    console.log("llega al actions");
-    console.log(`datos que envía el seridor, paisByName: ${apiData}`);
-    console.log(apiData);
-    //console.log(paisByName);
-    if (apiData.data === null) {
-      alert("País no encontrado");
-      return;
-    }else(dispatch({ type: GET_BY_NAME, payload: paisByName }))
-    
-  };
+    return async function (dispatch) {
+      //console.log(`(2)recibo el nombre que escribi en NavBar: ${name}`);
+      const apiData = await axios.get(`${URLBASE}countries/?nombre=${name}`);
+      const paisByName = [apiData.data];
+      console.log("llega al actions");
+      console.log(`datos que envía el seridor, paisByName: ${apiData}`);
+      console.log(apiData);
+      //console.log(paisByName);
+      if (apiData.data === null) {
+        alert("País no encontrado");
+        return;
+      } else dispatch({ type: GET_BY_NAME, payload: paisByName });
+    };
+  }
 };
 
 export function filterContinent(payload) {
@@ -64,8 +68,52 @@ export function orderByPopulation(payload) {
 export function getDetail(id) {
   //console.log(`en el Actions, id: ${id}`);
   return async function (dispatch) {
+    //let arrayDetail = [];
+    let arrayIdActividades = [];
+    let nombreActividadesSinDuplicados = [];
+
     try {
-      var json = await axios.get(`${URLBASE}countries/${id}`);
+      let json = await axios.get(`${URLBASE}activity/`);
+      //console.log(json.data);
+      //console.log(json.data.actividades);
+      //console.log(json.data.relaciones);
+      let relaciones = json.data.relaciones;
+      //console.log(relaciones);
+      for (let i = 0; i < relaciones.length; i++) {
+        if (relaciones[i].countryId === id) {
+          arrayIdActividades.push(relaciones[i].activityId);
+          //console.log(relaciones[i].countryId);
+          //console.log(relaciones[i].activityId);
+        }
+
+        /* if (relaciones[i].countryId === id) {
+          arrayDetail[1] = [...arrayDetail[1], relaciones[i].activityId];
+          //console.log();
+        } */
+      }
+      //console.log(arrayIdActividades);
+      //console.log(arrayDetail);
+      let actividades = json.data.actividades;
+      let nombreActividades = [];
+      //console.log(actividades);
+      for (let i = 0; i < actividades.length; i++) {
+        for (let j = 0; j < arrayIdActividades.length; j++) {
+          if (actividades[i].id === arrayIdActividades[j])
+            nombreActividades.push(actividades[i].nombre);
+        }
+      }
+
+      //console.log(nombreActividades);
+      nombreActividadesSinDuplicados = [...new Set(nombreActividades)];
+      console.log(nombreActividadesSinDuplicados);
+    } catch (error) {
+      console.log(error);
+    }
+
+    try {
+      let json = await axios.get(`${URLBASE}countries/${id}`);
+      json.data.actividades = nombreActividadesSinDuplicados;
+      console.log(json.data);
       return dispatch({
         type: GET_DETAILS,
         payload: json.data,
@@ -74,6 +122,12 @@ export function getDetail(id) {
       console.log(error);
     }
   };
+}
+export function filterActivades(value) {
+ /*  return async function (value){
+
+  } */
+
 }
 
 /* export function contryInActivity(payload) */
