@@ -18,22 +18,20 @@ export const getPaises = () => {
 };
 
 export const getByName = (nombre) => {
-  //console.log(`(1)recibo el nombre que escribi en NavBar: ${nombre}`);
-  if (nombre === null) {
-    alert("Coloque el nombre de un país.");
-    return;
-  } else {
+  console.log(`(1)recibo el nombre que escribí en NavBar: ${nombre}`);
+  console.log(nombre);
+
     const name = nombre
       .split(" ")
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
       .join(" ");
 
     return async function (dispatch) {
-      //console.log(`(2)recibo el nombre que escribi en NavBar: ${name}`);
+      //console.log(`(2)recibo el nombre que escribí en NavBar: ${name}`);
       const apiData = await axios.get(`${URLBASE}countries/?nombre=${name}`);
       const paisByName = [apiData.data];
       console.log("llega al actions");
-      console.log(`datos que envía el seridor, paisByName: ${apiData}`);
+      console.log(`datos que envía el servidor, paisByName: ${apiData}`);
       console.log(apiData);
       //console.log(paisByName);
       if (apiData.data === null) {
@@ -41,7 +39,7 @@ export const getByName = (nombre) => {
         return;
       } else dispatch({ type: GET_BY_NAME, payload: paisByName });
     };
-  }
+
 };
 
 export function filterContinent(payload) {
@@ -123,11 +121,12 @@ export function getDetail(id) {
     }
   };
 }
-export function filterActivades(value) {
+export function filterActividades(value) {
+    return;
  /*  return async function (value){
 
   } */
 
 }
 
-/* export function contryInActivity(payload) */
+/* export function countryInActivity(payload) */

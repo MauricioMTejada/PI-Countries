@@ -4,7 +4,7 @@ import style from "./NavBar.module.css";
 const NavBar = ({ handleChange, handleSubmit }) => {
   const location = useLocation();
 
-  if (location.pathname === "/create") {
+/*   if (location.pathname === "/create") {
     return (
       <div className={style.mainContainer}>
         <Link to="/home">Home</Link>
@@ -12,18 +12,27 @@ const NavBar = ({ handleChange, handleSubmit }) => {
         <div className={style.replaceSearch}></div>
       </div>
     );
-  }
+  } */
 
   return (
     <div className={style.mainContainer}>
+
       <Link to="/home">Home</Link>
       <Link to="/create">Form</Link>
-      <form onChange={handleChange}>
-        <input placeholder="Buscar" />
-        <button type="submit" onClick={handleSubmit}>
-          Buscar
-        </button>
-      </form>
+
+      <div>
+          {location.pathname === "/create" ? (
+            <div style={{ width: '228px', height: '23px' }}/>) : (
+
+            <form onChange={handleChange}>
+              <input placeholder="Buscar" />
+                <button type="submit" onClick={handleSubmit}>
+                  Buscar
+                </button>
+            </form>
+          )}
+      </div>
+
     </div>
   );
 };
