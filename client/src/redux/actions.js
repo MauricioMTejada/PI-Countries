@@ -1,4 +1,5 @@
 import axios from "axios";
+import store from "./store"
 
 const URLBASE = `http://localhost:3002/`;
 
@@ -9,13 +10,14 @@ export const ORDER_BY_NAME = "ORDER_BY_NAME";
 export const GET_DETAILS = "GET_DETAILS";
 export const ORDER_BY_POPULATION = "ORDER_BY_POPULATION";
 
-export const getPaises = () => {
-  return async function (dispatch) {
-    const apiData = await axios.get(URLBASE + "countries");
-    const paises = apiData.data;
-    dispatch({ type: GET_PAISES, payload: paises });
+// Buscar la lista completa de países:
+  export const getPaises = () => {
+    return async function (dispatch) {
+      const apiData = await axios.get(URLBASE + "countries");
+      const paises = apiData.data;
+      dispatch({ type: GET_PAISES, payload: paises });
+    };
   };
-};
 
 export const getByName = (nombre) => {
   console.log(`(1)recibo el nombre que escribí en NavBar: ${nombre}`);
@@ -47,13 +49,38 @@ export function filterContinent(payload) {
   return { type: FILTER_BY_CONTINENT, payload: payload };
 }
 
-export function orderByName(payload) {
-  // console.log(payload);
-  return {
-    type: ORDER_BY_NAME,
-    payload,
-  };
-}
+// Ordenar por Nombre:
+    export function orderByName(orden) {
+      let allPaises = store.getState().paises;
+      console.log("Tipo de orden:");
+      console.log(orden);
+
+      if (orden === "ascendente") {
+        allPaises.sort(function (a, b) {
+          if (a.nombre > b.nombre) { return 1; }
+          if (a.nombre < b.nombre) { return -1; }
+          return 0; }); }
+
+      if (orden === "descendente") {
+        allPaises.sort(function (a, b) {
+          if (a.nombre < b.nombre) { return 1; }
+          if (a.nombre > b.nombre) { return -1; }
+          return 0; }); }
+
+      if (orden === "sinOrden") {
+        allPaises = store.getState().copiaPaises;
+
+      }
+
+      console.log("En el action: ");
+      console.log(allPaises);
+
+
+      return {
+        type: ORDER_BY_NAME,
+        payload: allPaises,
+      };
+    }
 
 export function orderByPopulation(payload) {
   // console.log(payload);

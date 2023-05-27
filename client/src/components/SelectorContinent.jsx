@@ -1,4 +1,15 @@
+import { useDispatch } from "react-redux";
+import { filterContinent } from "../redux/actions";
+
 export function SelectorContinent ({ handleFilterContinent }) {
+const dispatch = useDispatch();
+
+      // Orden por Continente:
+      function handleFilterContinent(event) {
+        dispatch(filterContinent(event.target.value));
+       //setCurrentPage(1);
+    }
+
     return (
         <div style={{ paddingLeft: '10px', paddingRight: '10px' }}>
             <span> <strong>Orden por Continente:_</strong> </span>

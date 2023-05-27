@@ -99,48 +99,15 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case ORDER_BY_NAME:
-      //console.log(action.payload);
-      //console.log(state.paises);
-      
-      if (action.payload === "asc") {
-        state.paises.sort(function (a, b) {
-          if (a.nombre > b.nombre) {
-            return 1;
-          }
-          if (a.nombre < b.nombre) {
-            return -1;
-          }
-          return 0;
-        });
-      }
-
-      if (action.payload === "desc") {
-        state.paises.sort(function (a, b) {
-          if (a.nombre < b.nombre) {
-            return 1;
-          }
-          if (a.nombre > b.nombre) {
-            return -1;
-          }
-          return 0;
-        });
-      }
-
-      if (action.payload === "sinOrden") {
-        state.paises = state.copiaPaises
-      }
-      //console.log(state.paises);
-
-      //console.log(sortedArr);
       return {
         ...state,
-        paises: state.paises,
+        paises: action.payload,
       };
 
       case ORDER_BY_POPULATION:
         //console.log(action.payload);
         //console.log(state.paises);
-        
+
         if (action.payload === "asc") {
           state.paises.sort(function (a, b) {
             if (a.poblacion > b.poblacion) {
@@ -152,7 +119,7 @@ const rootReducer = (state = initialState, action) => {
             return 0;
           });
         }
-  
+
         if (action.payload === "desc") {
           state.paises.sort(function (a, b) {
             if (a.poblacion < b.poblacion) {
@@ -164,18 +131,18 @@ const rootReducer = (state = initialState, action) => {
             return 0;
           });
         }
-  
+
         if (action.payload === "sinOrden") {
           state.paises = state.copiaPaises
         }
         //console.log(state.paises);
-  
+
         //console.log(sortedArr);
         return {
           ...state,
           paises: state.paises,
         };
-      
+
 
       case GET_DETAILS:
         return {
