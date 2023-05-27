@@ -11,49 +11,49 @@ export const GET_DETAILS = "GET_DETAILS";
 export const ORDER_BY_POPULATION = "ORDER_BY_POPULATION";
 
 // Buscar la lista completa de países:
-  export const getPaises = () => {
-    return async function (dispatch) {
-      const apiData = await axios.get(URLBASE + "countries");
-      const paises = apiData.data;
-      dispatch({ type: GET_PAISES, payload: paises });
-    };
-  };
-
-export const getByName = (nombre) => {
-  console.log(`(1)recibo el nombre que escribí en NavBar: ${nombre}`);
-  console.log(nombre);
-
-    const name = nombre
-      .split(" ")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(" ");
-
-    return async function (dispatch) {
-      //console.log(`(2)recibo el nombre que escribí en NavBar: ${name}`);
-      const apiData = await axios.get(`${URLBASE}countries/?nombre=${name}`);
-      const paisByName = [apiData.data];
-      console.log("llega al actions");
-      console.log(`datos que envía el servidor, paisByName: ${apiData}`);
-      console.log(apiData);
-      //console.log(paisByName);
-      if (apiData.data === null) {
-        alert("País no encontrado");
-        return;
-      } else dispatch({ type: GET_BY_NAME, payload: paisByName });
+    export const getPaises = () => {
+        return async function (dispatch) {
+            const apiData = await axios.get(URLBASE + "countries");
+            const paises = apiData.data;
+            dispatch({ type: GET_PAISES, payload: paises });
+        };
     };
 
-};
+// Buscador de países:
+    export const getByName = (nombre) => {
+        // Adapto: primera letra mayúscula, siguientes minúsculas.
+        const name = nombre
+          .split(" ")
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+          .join(" ");
 
-export function filterContinent(payload) {
-  //console.log(payload);
-  return { type: FILTER_BY_CONTINENT, payload: payload };
-}
+        return async function (dispatch) {
+          const apiData = await axios.get(`${URLBASE}countries/?nombre=${name}`);
+          const paisByName = [apiData.data];
+          if (apiData.data === null) {
+            alert("País no encontrado");
+            return;
+          } else dispatch({ type: GET_BY_NAME, payload: paisByName });
+        };
 
-// Ordenar por Nombre:
+    };
+
+// Filtrar por Continente:
+    export function filterContinent(orden) {
+      let allPaises = store.getState().backupPaises;
+      const statusFiltered =
+        orden === "All"
+          ? allPaises
+          : allPaises.filter((element) => element.continente === orden);
+
+      return {
+        type: FILTER_BY_CONTINENT,
+        payload: statusFiltered };
+    }
+
+// Ordenar por Orden Alfabético:
     export function orderByName(orden) {
       let allPaises = store.getState().paises;
-      console.log("Tipo de orden:");
-      console.log(orden);
 
       if (orden === "ascendente") {
         allPaises.sort(function (a, b) {
@@ -67,93 +67,83 @@ export function filterContinent(payload) {
           if (a.nombre > b.nombre) { return -1; }
           return 0; }); }
 
-      if (orden === "sinOrden") {
-        allPaises = store.getState().copiaPaises;
-
-      }
-
-      console.log("En el action: ");
-      console.log(allPaises);
-
+      // if (orden === "sinOrden") {
+      //   allPaises = store.getState().backupPaises; }
 
       return {
         type: ORDER_BY_NAME,
-        payload: allPaises,
+        payload: allPaises, };
+    }
+
+// Ordenar por cantidad de Población:
+    export function orderByPopulation(orden) {
+      let allPaises = store.getState().paises;
+
+        if (orden === "asc") {
+          allPaises.sort(function (a, b) {
+            if (a.poblacion > b.poblacion) { return 1; }
+            if (a.poblacion < b.poblacion) { return -1; }
+            return 0; }); }
+
+        if (orden === "desc") {
+          allPaises.sort(function (a, b) {
+            if (a.poblacion < b.poblacion) { return 1; }
+            if (a.poblacion > b.poblacion) { return -1; }
+            return 0; }); }
+
+        if (orden === "sinOrden") {
+          allPaises = store.getState().backupPaises; }
+
+        return {
+          type: ORDER_BY_POPULATION,
+          payload: allPaises, };
+    }
+
+// Vista Detalle:
+    export function getDetail(id) {
+      return async function (dispatch) {
+
+        // Para solicitar actividades:
+            let arrayIdActividades = [];
+            let nombreActividadesSinDuplicados = [];
+
+            try {
+              let json = await axios.get(`${URLBASE}activity/`);
+              let relaciones = json.data.relaciones;
+              for (let i = 0; i < relaciones.length; i++) {
+                if (relaciones[i].countryId === id) {
+                  arrayIdActividades.push(relaciones[i].activityId);
+                }
+              }
+              let actividades = json.data.actividades;
+              let nombreActividades = [];
+              for (let i = 0; i < actividades.length; i++) {
+                for (let j = 0; j < arrayIdActividades.length; j++) {
+                  if (actividades[i].id === arrayIdActividades[j])
+                    nombreActividades.push(actividades[i].nombre);
+                }
+              }
+
+              nombreActividadesSinDuplicados = [...new Set(nombreActividades)];
+            } catch (error) {
+              console.log(error);
+            }
+
+
+        // Para solicitar los detalles del Pais al servidor:
+            try {
+                let json = await axios.get(`${URLBASE}countries/${id}`);
+                // Al dato que llega le agrego las actividades:
+                    json.data.actividades = nombreActividadesSinDuplicados;
+
+                return dispatch({
+                    type: GET_DETAILS,
+                    payload: json.data, });
+            } catch (error) {
+                console.log(error); }
       };
     }
 
-export function orderByPopulation(payload) {
-  // console.log(payload);
-  return {
-    type: ORDER_BY_POPULATION,
-    payload,
-  };
-}
-
-export function getDetail(id) {
-  //console.log(`en el Actions, id: ${id}`);
-  return async function (dispatch) {
-    //let arrayDetail = [];
-    let arrayIdActividades = [];
-    let nombreActividadesSinDuplicados = [];
-
-    try {
-      let json = await axios.get(`${URLBASE}activity/`);
-      //console.log(json.data);
-      //console.log(json.data.actividades);
-      //console.log(json.data.relaciones);
-      let relaciones = json.data.relaciones;
-      //console.log(relaciones);
-      for (let i = 0; i < relaciones.length; i++) {
-        if (relaciones[i].countryId === id) {
-          arrayIdActividades.push(relaciones[i].activityId);
-          //console.log(relaciones[i].countryId);
-          //console.log(relaciones[i].activityId);
-        }
-
-        /* if (relaciones[i].countryId === id) {
-          arrayDetail[1] = [...arrayDetail[1], relaciones[i].activityId];
-          //console.log();
-        } */
-      }
-      //console.log(arrayIdActividades);
-      //console.log(arrayDetail);
-      let actividades = json.data.actividades;
-      let nombreActividades = [];
-      //console.log(actividades);
-      for (let i = 0; i < actividades.length; i++) {
-        for (let j = 0; j < arrayIdActividades.length; j++) {
-          if (actividades[i].id === arrayIdActividades[j])
-            nombreActividades.push(actividades[i].nombre);
-        }
-      }
-
-      //console.log(nombreActividades);
-      nombreActividadesSinDuplicados = [...new Set(nombreActividades)];
-      console.log(nombreActividadesSinDuplicados);
-    } catch (error) {
-      console.log(error);
-    }
-
-    try {
-      let json = await axios.get(`${URLBASE}countries/${id}`);
-      json.data.actividades = nombreActividadesSinDuplicados;
-      console.log(json.data);
-      return dispatch({
-        type: GET_DETAILS,
-        payload: json.data,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-}
 export function filterActividades(value) {
     return;
- /*  return async function (value){
-
-  } */
-
 }
-
-/* export function countryInActivity(payload) */

@@ -8,27 +8,23 @@ const NavBar = () => {
     const dispatch = useDispatch()
     const location = useLocation();
 
-   // Cadena a Buscar:
-    const [searchString, setSearchString] = useState("");
+    // Cadena a Buscar:
+        const [searchString, setSearchString] = useState("");
 
-   // Detecta cambios a la entrada:
-     function handleChange(event) {
-       event.preventDefault();
-       setSearchString(event.target.value);
-       console.log(searchString);
-     }
+    // Detecta cambios a la entrada:
+        function handleChange(event) {
+            event.preventDefault();
+            setSearchString(event.target.value);
+            console.log(searchString); }
 
-   // Submit:
-     function handleSubmit(event) {
-       event.preventDefault();
-       if(searchString === "") {
-         alert("Coloque el nombre de un país.");
-         } else {
-           dispatch(getByName(searchString));
-           }
-       //setCurrentPage(1);
-     }
-
+    // Submit:
+        function handleSubmit(event) {
+            event.preventDefault();
+            if(searchString === "") {
+              alert("Coloque el nombre de un país.");
+              } else { dispatch(getByName(searchString)); }
+              //setCurrentPage(1);
+              }
 
   return (
     <div className={style.mainContainer}>

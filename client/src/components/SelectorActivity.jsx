@@ -1,6 +1,6 @@
 //import { useDispatch } from "react-redux"
 
-export default function SelectorActivity ({handleFilterActivities}) {
+export default function SelectorActivity () {
 //const dispatch = useDispatch();
 
   // Orden por Actividades

@@ -16,7 +16,9 @@ export default function Paginado() {
       // Sin éste estado, cuando presiono la lista desplegable no muestra
       // cambios hasta que se presiona el número de alguna página.
       // No funciona si se deja el estado en el componente hijo.
-      const [orden, setOrden] = useState(false);
+      // También se usa pra resetear el elemento mostrado en la lista desplegable,
+      // cuando cambio las opciones de las listas Orden Alfabético y Por Población.
+      const [orden, setOrden] = useState({sortAlpha: "sinOrden", sortPopul: "sinOrden"});
 
 
   // Número de página actual:
@@ -27,15 +29,15 @@ export default function Paginado() {
       const indexOfLastCountry = currentPage * presentarPaises;
   // Primer elemento:
       const indexOfFirstCounty = indexOfLastCountry - presentarPaises;
-  // Elementos a renderizar
+  // Extraigo del array los elementos a renderizar
       const currentCountry = allPaises.slice(indexOfFirstCounty, indexOfLastCountry);
-  // Función que setea el número de página:
+  // Función que setea el número de página a renderizar:
       const handlePaginado = (pageNumber) => { setCurrentPage(pageNumber); };
   // Control en consola:
-      console.log("imprimo los paises a renderizar (currentCountry)");
-      console.log(currentCountry);
+      //console.log("imprimo los paises a renderizar (currentCountry)");
+      //console.log(currentCountry);
 
-  // Arreglo de números a los que se le dará un vínculo:
+  // Array de números de paginado a los que se le dará un vínculo:
       const pageNumbers = [];
       for (let i = 0; i < Math.ceil(allPaises.length / presentarPaises); i++) {
         pageNumbers.push(i + 1);}
@@ -44,9 +46,9 @@ export default function Paginado() {
       <div>
           {/* Selectores */}
               <div className={style.selectores}>
+              <SelectorContinent orden={orden} setOrden={setOrden} setCurrentPage={setCurrentPage}/>
               <SelectorSortAlphabetical orden={orden} setOrden={setOrden} />
-              <SelectorSortPopulation />
-              <SelectorContinent />
+              <SelectorSortPopulation orden={orden} setOrden={setOrden} />
               <SelectorActivity />
               </div>
 

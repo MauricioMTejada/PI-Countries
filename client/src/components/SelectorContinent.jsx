@@ -1,13 +1,14 @@
 import { useDispatch } from "react-redux";
 import { filterContinent } from "../redux/actions";
 
-export function SelectorContinent ({ handleFilterContinent }) {
+export function SelectorContinent ({ orden, setOrden, setCurrentPage }) {
 const dispatch = useDispatch();
 
       // Orden por Continente:
       function handleFilterContinent(event) {
         dispatch(filterContinent(event.target.value));
-       //setCurrentPage(1);
+        setOrden({...orden, sortPopul: "sinOrden", sortAlpha: "sinOrden"});
+        setCurrentPage(1);
     }
 
     return (

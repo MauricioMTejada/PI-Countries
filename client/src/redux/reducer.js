@@ -72,83 +72,27 @@ import {
   ],
 }; */
 
-const initialState = { paises: [], copiaPaises: [], detail: [] };
+const initialState = { paises: [], backupPaises: [], detail: [] };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_PAISES:
-      return { ...state, paises: action.payload, copiaPaises: action.payload };
+      return { ...state, paises: action.payload, backupPaises: action.payload };
 
     case GET_BY_NAME:
-      //console.log("llega al reducer");
-      //console.log(`action.payload: ${action.payload}`);
-      //console.log(action.payload);
-      //console.log(state.paises);
       return { ...state, paises: action.payload };
 
     case FILTER_BY_CONTINENT:
-      //console.log(action.payload);
-      const paises = state.copiaPaises;
-      const statusFiltered =
-        action.payload === "All"
-          ? paises
-          : paises.filter((element) => element.continente === action.payload);
-      return {
-        ...state,
-        paises: statusFiltered,
-      };
+      return { ...state, paises: action.payload, };
 
     case ORDER_BY_NAME:
-      return {
-        ...state,
-        paises: action.payload,
-      };
+      return { ...state, paises: action.payload, };
 
-      case ORDER_BY_POPULATION:
-        //console.log(action.payload);
-        //console.log(state.paises);
+    case ORDER_BY_POPULATION:
+      return { ...state, paises: action.payload, };
 
-        if (action.payload === "asc") {
-          state.paises.sort(function (a, b) {
-            if (a.poblacion > b.poblacion) {
-              return 1;
-            }
-            if (a.poblacion < b.poblacion) {
-              return -1;
-            }
-            return 0;
-          });
-        }
-
-        if (action.payload === "desc") {
-          state.paises.sort(function (a, b) {
-            if (a.poblacion < b.poblacion) {
-              return 1;
-            }
-            if (a.poblacion > b.poblacion) {
-              return -1;
-            }
-            return 0;
-          });
-        }
-
-        if (action.payload === "sinOrden") {
-          state.paises = state.copiaPaises
-        }
-        //console.log(state.paises);
-
-        //console.log(sortedArr);
-        return {
-          ...state,
-          paises: state.paises,
-        };
-
-
-      case GET_DETAILS:
-        return {
-          ...state, detail: action.payload
-
-        }
+    case GET_DETAILS:
+      return { ...state, detail: action.payload };
 
     default:
       return { ...state };

@@ -1,22 +1,21 @@
 import { useDispatch } from "react-redux";
 import { orderByPopulation } from "../redux/actions";
 
-export default function SelectorSortPopulation ({handleSortPoblación}) {
-    const dispatch = useDispatch
+export default function SelectorSortPopulation ({ orden, setOrden }) {
+    const dispatch = useDispatch();
 
-      // Orden por Cantidad de Población:
-      function handleSortPoblación(element) {
-        element.preventDefault();
+    function handleSortPoblación(element) {
+        //console.log(element.target.value);
         dispatch(orderByPopulation(element.target.value));
-        //setCurrentPage(1);
-        //setOrden(`${element.target.value}`);
+        setOrden({...orden, sortAlpha: "sinOrden", sortPopul: element.target.value});
       }
+
     return (
         <div style={{ paddingLeft: '10px', paddingRight: '10px' }}>
             <span> <strong> Orden por Población: </strong> </span>
 
-            <select onChange={(element) => handleSortPoblación(element)}>
-                <option value="sinOrden">Sin Alterar</option>
+            <select value={orden.sortPopul} onChange={(element) => handleSortPoblación(element)}>
+                <option value="sinOrden">- Elija un orden -</option>
                 <option value="asc">Ascendente</option>
                 <option value="desc">Descendente</option>
             </select>

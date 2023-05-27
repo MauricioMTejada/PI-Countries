@@ -6,7 +6,6 @@ import { getDetail } from "../../redux/actions";
 import style from "./Detail.module.css";
 
 export default function Detail(props) {
-  //console.log(`en modulo Detalle: ${props.match.params.id}`);
   const dispatch = useDispatch();
 
   useEffect(() => {
