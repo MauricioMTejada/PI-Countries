@@ -104,27 +104,55 @@ export const ORDER_BY_POPULATION = "ORDER_BY_POPULATION";
       return async function (dispatch) {
 
         // Para solicitar actividades:
+            //console.log(`id de country: ${id}`);
             let arrayIdActividades = [];
             let nombreActividadesSinDuplicados = [];
 
             try {
               let json = await axios.get(`${URLBASE}activity/`);
               let relaciones = json.data.relaciones;
+              // console.log(relaciones);
               for (let i = 0; i < relaciones.length; i++) {
                 if (relaciones[i].countryId === id) {
                   arrayIdActividades.push(relaciones[i].activityId);
                 }
               }
+              // console.log("Array actividades:");
+              // console.log(arrayIdActividades);
+
               let actividades = json.data.actividades;
+              // console.log(actividades)
               let nombreActividades = [];
               for (let i = 0; i < actividades.length; i++) {
                 for (let j = 0; j < arrayIdActividades.length; j++) {
-                  if (actividades[i].id === arrayIdActividades[j])
-                    nombreActividades.push(actividades[i].nombre);
+                  if (actividades[i].id === arrayIdActividades[j]){
+                    // console.log(actividades[i]);
+                    nombreActividades.push(actividades[i]);}
                 }
               }
 
-              nombreActividadesSinDuplicados = [...new Set(nombreActividades)];
+              // console.log(`nombreActividades: `);
+              // console.log(nombreActividades);
+
+              for (let i = nombreActividades.length - 1; i >= 0 ; i--) {
+
+                let varAux = 0;
+                for(let j = 0; j < nombreActividadesSinDuplicados.length; j++){
+                  if (nombreActividades[i].nombre === nombreActividadesSinDuplicados[j].nombre){
+                    varAux = 1;
+                  }
+
+                }
+
+                if( varAux === 0) {
+                  nombreActividadesSinDuplicados.push(nombreActividades[i])
+                }
+
+              }
+
+              //nombreActividadesSinDuplicados = [...new Set(nombreActividades)];
+              console.log(`nombreActividadesSinDuplicados: `);
+              console.log(nombreActividadesSinDuplicados);
             } catch (error) {
               console.log(error);
             }

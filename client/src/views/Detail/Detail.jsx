@@ -13,7 +13,13 @@ export default function Detail(props) {
   }, [dispatch, props.match.params.id]);
 
   const myCountry = useSelector((state) => state.detail);
+  console.log(myCountry);
 
+  //Consulto si hay actividades:
+    // let haveActivities = 0;
+    // if(myCountry.actividades.length === 0) haveActivities = 1;
+
+  if(myCountry.length !== 0)
   return (
     <div className={style.imagenFondo}>
       <div>
@@ -43,8 +49,10 @@ export default function Detail(props) {
           <strong>Población: </strong>
           <span>{myCountry.poblacion}</span>
           <br />
-          <strong>Actividades: </strong>
-          <span>{myCountry.actividades}</span>
+          {myCountry.actividades.length !== 0 && (<strong>Actividades: </strong>)}
+          {myCountry.actividades.map(element => {return (<div key={element.id}>
+            <span>Nombre: {element.nombre}, Dificultad: {element.dificultad}, Duración: {element.duracion} hs., Temporada: {element.temporada}</span></div>)})}
+
         </div>
       </div>
       <br />
@@ -53,5 +61,6 @@ export default function Detail(props) {
         <button>Volver</button>{" "}
       </Link>
     </div>
-  );
+  )
+  else {return(<></>)};
 }
