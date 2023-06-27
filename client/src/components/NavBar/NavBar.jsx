@@ -15,7 +15,8 @@ const NavBar = () => {
         function handleChange(event) {
             event.preventDefault();
             setSearchString(event.target.value);
-            console.log(searchString); }
+            // console.log(searchString);
+          }
 
     // Submit:
         function handleSubmit(event) {

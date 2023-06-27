@@ -153,8 +153,8 @@ export const FILTER_BY_ACTIVITIES = "FILTER_BY_ACTIVITIES";
               }
 
               //nombreActividadesSinDuplicados = [...new Set(nombreActividades)];
-              console.log(`nombreActividadesSinDuplicados: `);
-              console.log(nombreActividadesSinDuplicados);
+              // console.log(`nombreActividadesSinDuplicados: `);
+              // console.log(nombreActividadesSinDuplicados);
             } catch (error) {
               console.log(error);
             }
@@ -214,12 +214,6 @@ export const FILTER_BY_ACTIVITIES = "FILTER_BY_ACTIVITIES";
                 if(nameActivitie === "Choose"){
                   //Del arreglo de todos los países, filtro según los id obtenidos
                   let allPaises = store.getState().backupPaises;
-                  // let countryActivityData = [];
-                  // countryIdUnique.map(element =>
-                  //   allPaises.map(anidado =>
-                  //     element == anidado.id ? countryActivityData.push(anidado) : null))
-                  // let countryActivityData = allPaises.filter((element) => (element.id == nameActivitie))
-                  // console.log(countryActivityData);
 
                   return dispatch({
                     type: FILTER_BY_ACTIVITIES,
