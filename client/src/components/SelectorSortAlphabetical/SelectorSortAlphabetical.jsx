@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
-import { orderByName } from "../redux/actions";
+import { orderByName } from "../../redux/actions";
+import style from "./SelectorSortAlphabetical.module.css"
 
 export default function SelectorSortAlphabetical ({ orden, setOrden }) {
     const dispatch = useDispatch();
@@ -12,8 +13,8 @@ export default function SelectorSortAlphabetical ({ orden, setOrden }) {
     }
 
     return (
-        <div style={{ paddingLeft: '10px', paddingRight: '10px' }}>
-            <span> <strong>Orden Alfabético:_</strong> </span>
+        <div className={style.container}>
+            <span> <strong>Orden Alfabético: </strong> </span>
 
             <select value={orden.sortAlpha} onChange={(element) => handleSortAlphabetical(element)}>
                 <option value="sinOrden">- Elija un orden -</option>

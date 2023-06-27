@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import style from "./Paginado.module.css";
 import CardsContainer from "../CardsContainer/CardsContainer";
-import SelectorSortAlphabetical from "../SelectorSortAlphabetical";
-import SelectorSortPopulation from "../SelectorSortPopulation";
-import { SelectorContinent } from "../SelectorContinent";
-import SelectorActivity from "../SelectorActivity";
+import SelectorSortAlphabetical from "../SelectorSortAlphabetical/SelectorSortAlphabetical";
+import SelectorSortPopulation from "../SelectorSortPopulation/SelectorSortPopulation";
+import { SelectorContinent } from "../SelectorContinent/SelectorContinent";
+import SelectorActivity from "../SelectorActivity/SelectorActivity";
 import { useSelector } from "react-redux";
 
 export default function Paginado() {
@@ -18,7 +18,12 @@ export default function Paginado() {
       // No funciona si se deja el estado en el componente hijo.
       // También se usa pra resetear el elemento mostrado en la lista desplegable,
       // cuando cambio las opciones de las listas Orden Alfabético y Por Población.
-      const [orden, setOrden] = useState({sortAlpha: "sinOrden", sortPopul: "sinOrden"});
+      const [orden, setOrden] = useState({
+				sortAlpha: "sinOrden",
+				sortPopul: "sinOrden",
+				sortActivity: "Choose",
+				sortContinent: "All",
+			});
 
 
   // Número de página actual:
@@ -43,14 +48,21 @@ export default function Paginado() {
         pageNumbers.push(i + 1);}
 
   return (
-      <div>
+        //<div className={style.container}>
+        <div>
           {/* Selectores */}
-              <div className={style.selectores}>
-              <SelectorContinent orden={orden} setOrden={setOrden} setCurrentPage={setCurrentPage}/>
-              <SelectorSortAlphabetical orden={orden} setOrden={setOrden} />
-              <SelectorSortPopulation orden={orden} setOrden={setOrden} />
-              <SelectorActivity />
-              </div>
+            <div className={style.container}>
+                <div className={style.selectores}>
+                    <div className={style.selectoresLinea}>
+                        <SelectorContinent orden={orden} setOrden={setOrden} setCurrentPage={setCurrentPage} />
+                        <SelectorActivity orden={orden} setOrden={setOrden} setCurrentPage={setCurrentPage} />
+                    </div>
+                    <div className={style.selectoresLinea}>
+                        <SelectorSortAlphabetical orden={orden} setOrden={setOrden} />
+                        <SelectorSortPopulation orden={orden} setOrden={setOrden} />
+                    </div>
+                </div>
+            </div>
 
           {/* Numeración paginado */}
               <nav>
@@ -58,12 +70,7 @@ export default function Paginado() {
                   {pageNumbers.length > 1 &&
                     pageNumbers.map((number) => (
                       <a className={style.numeroContainer} key={"a"+number} href={`#${number}a`}>
-                        <span
-                          href={`#${number}`}
-                          key={number}
-                          className={style.numeroStyle}
-                          onClick={() => handlePaginado(number)}
-                          >
+                        <span href={`#${number}`} key={number} className={style.numeroStyle} onClick={() => handlePaginado(number)} >
                           {number}
                         </span>
                       </a>
@@ -74,6 +81,6 @@ export default function Paginado() {
           {/* Elementos a visualizar */}
               <CardsContainer currentCountry={currentCountry}/>
 
-      </div>
+        </div>
   );
 }

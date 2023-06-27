@@ -4,7 +4,9 @@ import {
   FILTER_BY_CONTINENT,
   ORDER_BY_NAME,
   GET_DETAILS,
-  ORDER_BY_POPULATION
+  ORDER_BY_POPULATION,
+  GET_LIST_ATIVITIES,
+  FILTER_BY_ACTIVITIES
 } from "./actions";
 
 /* const initialState = {
@@ -72,7 +74,7 @@ import {
   ],
 }; */
 
-const initialState = { paises: [], backupPaises: [], detail: [] };
+const initialState = { paises: [], backupPaises: [], detail: [], listaActividades: [] };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -93,6 +95,12 @@ const rootReducer = (state = initialState, action) => {
 
     case GET_DETAILS:
       return { ...state, detail: action.payload };
+
+    case GET_LIST_ATIVITIES:
+      return { ...state, listaActividades: action.payload }
+
+    case FILTER_BY_ACTIVITIES:
+      return { ...state, paises: action.payload };
 
     default:
       return { ...state };

@@ -13,7 +13,7 @@ export default function Detail(props) {
   }, [dispatch, props.match.params.id]);
 
   const myCountry = useSelector((state) => state.detail);
-  console.log(myCountry);
+  // console.log(myCountry);
 
   //Consulto si hay actividades:
     // let haveActivities = 0;

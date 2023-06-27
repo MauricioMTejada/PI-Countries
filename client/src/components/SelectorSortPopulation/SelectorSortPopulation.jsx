@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
-import { orderByPopulation } from "../redux/actions";
+import { orderByPopulation } from "../../redux/actions";
+import style from "./SelectorSortPopulation.module.css"
 
 export default function SelectorSortPopulation ({ orden, setOrden }) {
     const dispatch = useDispatch();
@@ -11,7 +12,7 @@ export default function SelectorSortPopulation ({ orden, setOrden }) {
       }
 
     return (
-        <div style={{ paddingLeft: '10px', paddingRight: '10px' }}>
+        <div className={style.container}>
             <span> <strong> Orden por Población: </strong> </span>
 
             <select value={orden.sortPopul} onChange={(element) => handleSortPoblación(element)}>
