@@ -22,22 +22,22 @@ server.use((req, res, next) => {
 });
 
 server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
-/* El primer middleware, bodyParser.urlencoded(), se utiliza para analizar 
-los datos enviados por el cliente en el cuerpo de una solicitud HTTP. 
-En este caso, se configura para analizar los datos codificados en formato 
-URL y para permitir que los datos analizados incluyan objetos anidados. 
+/* El primer middleware, bodyParser.urlencoded(), se utiliza para analizar
+los datos enviados por el cliente en el cuerpo de una solicitud HTTP.
+En este caso, se configura para analizar los datos codificados en formato
+URL y para permitir que los datos analizados incluyan objetos anidados.
 También se establece un límite de tamaño máximo de 50 MB para los datos analizados.*/
 server.use(bodyParser.json({ limit: "50mb" }));
-/*El segundo middleware, bodyParser.json(), se utiliza para analizar los datos 
-enviados por el cliente en el cuerpo de una solicitud HTTP. En este caso, se 
-configura para analizar los datos en formato JSON y para establecer un límite 
+/*El segundo middleware, bodyParser.json(), se utiliza para analizar los datos
+enviados por el cliente en el cuerpo de una solicitud HTTP. En este caso, se
+configura para analizar los datos en formato JSON y para establecer un límite
 de tamaño máximo de 50 MB para los datos analizados.*/
 server.use(cookieParser());
-/*El tercer middleware, cookieParser(), se utiliza para analizar las cookies 
+/*El tercer middleware, cookieParser(), se utiliza para analizar las cookies
 enviadas por el cliente en una solicitud HTTP. */
 server.use(morgan("dev"));
-/*El cuarto middleware, morgan('dev'), se utiliza para registrar detalles de la 
-solicitud HTTP en la consola del servidor para fines de depuración. En este caso, 
+/*El cuarto middleware, morgan('dev'), se utiliza para registrar detalles de la
+solicitud HTTP en la consola del servidor para fines de depuración. En este caso,
 se utiliza la opción 'dev' para registrar los detalles en un formato legible. */
 server.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
@@ -49,15 +49,15 @@ server.use((req, res, next) => {
   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
   next();
 });
-/*El último middleware se utiliza para configurar los encabezados de respuesta HTTP 
-para permitir el acceso a recursos desde un origen diferente al servidor, es decir, 
-para evitar errores de CORS (Cross-Origin Resource Sharing). Se establece el valor 
-del encabezado Access-Control-Allow-Origin en 'http://localhost:3000', lo que 
-significa que solo se permite el acceso desde el origen 'http://localhost:3000'. 
-Se establece el valor del encabezado Access-Control-Allow-Credentials en 'true', lo 
-que permite enviar cookies de origen cruzado. Los encabezados 
-Access-Control-Allow-Headers y Access-Control-Allow-Methods se establecen para 
-permitir ciertos encabezados y métodos HTTP. El middleware next() se utiliza para 
+/*El último middleware se utiliza para configurar los encabezados de respuesta HTTP
+para permitir el acceso a recursos desde un origen diferente al servidor, es decir,
+para evitar errores de CORS (Cross-Origin Resource Sharing). Se establece el valor
+del encabezado Access-Control-Allow-Origin en 'http://localhost:3000', lo que
+significa que solo se permite el acceso desde el origen 'http://localhost:3000'.
+Se establece el valor del encabezado Access-Control-Allow-Credentials en 'true', lo
+que permite enviar cookies de origen cruzado. Los encabezados
+Access-Control-Allow-Headers y Access-Control-Allow-Methods se establecen para
+permitir ciertos encabezados y métodos HTTP. El middleware next() se utiliza para
 pasar la solicitud al siguiente middleware en la cadena de middleware. */
 
 server.use("/", routes);
