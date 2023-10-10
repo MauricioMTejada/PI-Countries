@@ -1,5 +1,12 @@
 ![HenryLogo](https://d31uz8lwfmyn8g.cloudfront.net/Assets/logo-henry-white-lg.png)
 
+-  Backend: <br />
+   cd api <br />
+   npm start
+-  Frondend: <br />
+   cd client <br />
+   npm start
+
 # **COUNTRIES** | Proyecto Individual
 
 ## **📌 OBJETIVOS**
