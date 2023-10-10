@@ -1,5 +1,12 @@
 ![HenryLogo](https://d31uz8lwfmyn8g.cloudfront.net/Assets/logo-henry-white-lg.png)
 
+-  Backend: <br />
+   cd api <br />
+   npm start
+-  Frondend: <br />
+   cd client <br />
+   npm start
+
 # **COUNTRIES** | Proyecto Individual
 
 ## **📌 OBJETIVOS**
@@ -248,3 +255,5 @@ Ten en cuenta que en esta instancia no es obligatorio el desarrollo de testing p
 <br />
 
   <img src="./countries.png" />
+# PI-Countries
+Proyecto Individual de Henry
